@@ -14,6 +14,14 @@ The performance of each model was compared against each other using a common cli
 
 
 ## Steps to Reproduce Results
+The hyperparameters used in both models are included in `.yaml` files 
+([2D](https://github.com/zcemctt/MPHY0041_Segmentation/blob/master/UNet_2D_Cy/hyper_parameters.yaml) 
+and [3D](https://github.com/zcemctt/MPHY0041_Segmentation/blob/master/UNet_3D_Cy/hyper_parameters.yaml) hyperparameters).
+The final hyperparameters used in both models are summarized in the table below:
 
+| Hyperparameters      | [2D Model](https://github.com/zcemctt/MPHY0041_Segmentation/blob/master/UNet_2D_Cy/hyper_parameters.yaml) | [3D Model](https://github.com/zcemctt/MPHY0041_Segmentation/blob/master/UNet_3D_Cy/hyper_parameters.yaml) |
+| ----------- | ----------- | ----------- |
+| N           | 50          | 50          |
+| N_test      | 30          | 30          |
 
 ## Roles and Contributions 

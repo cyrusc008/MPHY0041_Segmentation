@@ -42,7 +42,7 @@ The roles and contributions of each team member are summarized in the table belo
 |---------------------------|---------------------------|
 | Guglielmo Pellegrino      | Cleaning of code; commenting; importing code to [Colab](https://colab.research.google.com/drive/1QF9A59y2OcXYU6PlmKnDCMcDXJnNzo8A); dropout optimization |
 | Aman Ganglani             | Architecture research and documentation; TensorFlow-GPU installation; model training |
-| Cyrus Tanade              | Wrote original 2D and 3D segmentation code; wrote group technical report; hyperparameter optimization; maintenance of GitHub repository |
+| Cyrus Tanade              | Wrote original 2D and 3D segmentation code; wrote the [Technical Report](https://github.com/zcemctt/MPHY0041_Segmentation/blob/master/README.md); hyperparameter optimization; maintenance of [GitHub Repository](https://github.com/zcemctt/MPHY0041_Segmentation) |
 | Jack Weeks                | Model optimization (data augmentation and regularization); hyperparameter optimization |
 | Nikita Jesaibegjans       | Background research; computational metrics; hyperparameter optimization |
 | Josephine Windsor-Lewis   | Wrote mask overlay code; clinical metrics; group project management |

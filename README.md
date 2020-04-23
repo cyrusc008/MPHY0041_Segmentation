@@ -32,8 +32,17 @@ of epochs used to train the model, `val_size` is the proportion of the training 
 model improvement for early-stopping.
 
 To train the model, run the `train.py` script for each model. We encourage using TensorFlow-GPU to train the model in a
-reasonable duration of time. The files to run tensorboard are saved in the `logs` directory. Run the following code to view results on TensorBoard: `tensorboard --logdir=logs/ --host localhost --port 8088`. The predicted masks from the model are compared to the true masks in the training dataset for each sample and slice in the `plots_training` directory. The predicted masks are plotted alongside the MR image in the `plots_testing` directory. There is also a `plots_training_overlay` directory that overlays the predicted and true masks on the MR image for each slice.
-
-
+reasonable duration of time. The files to run TensorBoard are saved in the `logs` directory. Run the following code to view results on TensorBoard: `tensorboard --logdir=logs/ --host localhost --port 8088`. The predicted masks from the model are compared to the true masks in the training dataset for each sample and slice in the `plots_training` directory. The predicted masks are plotted alongside the MR image in the `plots_testing` directory. There is also a `plots_training_overlay` directory that overlays the predicted and true masks on the MR image for each slice.
 
 ## Roles and Contributions 
+
+The roles and contributions of each team member are summarized in the table below:
+
+| Name                      | Responsibilities          |
+|---------------------------|---------------------------|
+| Guglielmo Pellegrino      | Cleaning of code; commenting; importing code to [Colab](https://colab.research.google.com/drive/1QF9A59y2OcXYU6PlmKnDCMcDXJnNzo8A); dropout optimization |
+| Aman Ganglani             | Architecture research and documentation; TensorFlow-GPU installation; model training |
+| Cyrus Tanade              | Wrote original 2D and 3D segmentation code; wrote group technical report; hyperparameter optimization; maintenance of GitHub repository |
+| Jack Weeks                | Model optimization (data augmentation and regularization); hyperparameter optimization |
+| Nikita Jesaibegjans       | Background research; computational metrics; hyperparameter optimization |
+| Josephine Windsor-Lewis   | Wrote mask overlay code; clinical metrics; group project management |

@@ -14,14 +14,26 @@ The performance of each model was compared against each other using a common cli
 
 
 ## Steps to Reproduce Results
-The hyperparameters used in both models are included in `.yaml` files 
-([2D](https://github.com/zcemctt/MPHY0041_Segmentation/blob/master/UNet_2D_Cy/hyper_parameters.yaml) 
-and [3D](https://github.com/zcemctt/MPHY0041_Segmentation/blob/master/UNet_3D_Cy/hyper_parameters.yaml) hyperparameters).
-The final hyperparameters used in both models are summarized in the table below:
+The hyperparameters used in both models are included in `.yaml` files. The final hyperparameters used in both models are summarized in the table below:
 
 | Hyperparameters      | [2D Model](https://github.com/zcemctt/MPHY0041_Segmentation/blob/master/UNet_2D_Cy/hyper_parameters.yaml) | [3D Model](https://github.com/zcemctt/MPHY0041_Segmentation/blob/master/UNet_3D_Cy/hyper_parameters.yaml) |
 | ----------- | ----------- | ----------- |
-| N           | 50          | 50          |
-| N_test      | 30          | 30          |
+| learning_rate  | 1e-4        | 1e-4        |
+| epochs         | 1000        | 1000        |
+| val_size       | 0.1         | 0.1         |
+| dropout        | 0.5         | 0.5         |
+| batch_size     | 16          | 4           |
+| patience       | 100         | 100         |
+
+where `learning_rate` is the step size at each iteration while minimizing a loss function, `epochs` is the maximum number
+of epochs used to train the model, `val_size` is the proportion of the training dataset (`N=50`) used for test validation,
+`dropout` is the proportion of neurons that is randomly selected to be ignored during training (for regularization),
+`batch_size` is the number of training examples used in one iteration, and `patience` is the number of epochs with no
+model improvement for early-stopping.
+
+To train the model, run the `train.py` script for each model. We encourage using TensorFlow-GPU to train the model in a
+reasonable duration of time. The files to run tensorboard are saved in the `logs` directory. Run the following code to view results on TensorBoard: `tensorboard --logdir=logs/ --host localhost --port 8088`. The predicted masks from the model are compared to the true masks in the training dataset for each sample and slice in the `plots_training` directory. The predicted masks are plotted alongside the MR image in the `plots_testing` directory. There is also a `plots_training_overlay` directory that overlays the predicted and true masks on the MR image for each slice.
+
+
 
 ## Roles and Contributions 

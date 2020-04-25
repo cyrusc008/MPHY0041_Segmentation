@@ -168,13 +168,16 @@ model.compile(optimizer=tf.optimizers.Adam(learning_rate), loss=dice_coef_loss, 
 model.summary()
 
 # Checkpoints and Callbacks
-checkpointer = tf.keras.callbacks.ModelCheckpoint('model_pros_segmentation.h5',
-                                                  verbose=1, save_best_only=True)
-callbacks = [
+#checkpointer = tf.keras.callbacks.ModelCheckpoint('model_pros_segmentation.h5',
+#                                                  verbose=1, save_best_only=True)
+callbacks = [tf.keras.callbacks.ModelCheckpoint('model_pros_segmentation.h5',
+                                                 verbose=1, save_best_only=True),
             tf.keras.callbacks.EarlyStopping(patience=patience, monitor='loss'),
             tf.keras.callbacks.TensorBoard(log_dir='logs')]
 results = model.fit(X_train, Y_train, validation_split=val_size, batch_size=batch_size,
                     epochs=epochs, callbacks=callbacks) 
+
+model.save('my_model.h5') 
 
 # Save the output masks
 

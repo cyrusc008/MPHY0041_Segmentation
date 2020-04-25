@@ -10,7 +10,7 @@ img_thickness: 32
 img_channels: 1
 
 learning_rate: 1e-4
-epochs: 1000
+epochs: 10
 val_size: 0.1
 dropout: 0.5
 batch_size: 4

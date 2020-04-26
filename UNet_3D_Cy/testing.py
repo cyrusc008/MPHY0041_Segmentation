@@ -17,20 +17,12 @@ path_to_save = config['path_to_save']
 
 N = config['N']
 N_test = config['N_test']
+val_size = config['val_size']
 
 img_width = config['img_width']
 img_height = config['img_height']
 img_thickness = config['img_thickness']
 img_channels = config['img_channels']
-
-learning_rate = float(config['learning_rate'])
-epochs = config['epochs']
-val_size = config['val_size']
-dropout = config['dropout']
-batch_size = config['batch_size']
-patience = config['patience']
-
-f = config['f']
 
 # Load Training Data
 X_train = np.zeros((N, img_thickness, img_height, img_width, img_channels), dtype=np.float32)
@@ -47,8 +39,6 @@ for n in tqdm(range(N)):
     Y_train[n] = label[:,:,:,np.newaxis]
 
 print('Loaded Training Data')
-
-print(X_train.shape)
 
 # Load Testing Data
 X_test = np.zeros((N_test, img_thickness, img_height, img_width, img_channels), dtype=np.float32)
@@ -67,13 +57,13 @@ print('','','')
 
 # Load the trained model
 
-model = tf.keras.models.load_model('my_model.h5', custom_objects={'dice_coef_loss': dice_coef_loss,
-                                                                  'dice_coef': dice_coef},
-                                                  compile=False)
+model = tf.keras.models.load_model('saved_model/best_model.h5',
+                                    custom_objects={'dice_coef_loss': dice_coef_loss,
+                                                    'dice_coef': dice_coef})
 tf.print(model.summary())
 
-loss, acc = model.evaluate(X_train,  Y_train, verbose=2)
-print('Restored model, accuracy: {:5.2f}%'.format(100*acc))
+loss, dice = model.evaluate(X_train,  Y_train, verbose=1)
+print('Restored model, average dice coefficient: {:5.2f}'.format(dice))
 
 # Save the masks
 
@@ -104,22 +94,22 @@ for ix in tqdm(range(len(preds_train))):
         ax1.title.set_text('Clinical Image')
         ax2.title.set_text('Real Mask')
         ax3.title.set_text('Predicted Mask')
-        plt.savefig(f'testing_training/Training_Masks_ix_{ix+1}_slice_{iy+1}.png')
+        plt.savefig(f'plots_training/Training_Masks_ix_{ix+1}_slice_{iy+1}.png')
         plt.close()
 
 print('Finished Saving')
 print('','','')
 print('','','')
-print('Saving 2D Segmentation Training Mask Overlays')
+print('Saving 3D Segmentation Training Mask Overlays')
 
 for ix in tqdm(range(len(preds_train))):
     for iy in range(img_thickness):
         fig = plt.figure()
-        fig.suptitle(f'2D Segmentation Training Mask Overlay (ix={ix+1}, slice={iy+1})', fontsize=12)
+        fig.suptitle(f'3D Segmentation Training Mask Overlay (ix={ix+1}, slice={iy+1})', fontsize=12)
         ax1 = fig.add_subplot()
-        plt.imshow(np.squeeze(X_train[ix]))
-        plt.contour(np.squeeze(Y_train[ix]),1,colors='yellow',linewidths=0.5)
-        plt.contour(np.squeeze(preds_train_t[ix]),1,colors='red',linewidths=0.5)
+        plt.imshow(np.squeeze(X_train[ix,iy,:,:]))
+        plt.contour(np.squeeze(Y_train[ix,iy,:,:]),1,colors='yellow',linewidths=0.5)
+        plt.contour(np.squeeze(preds_train_t[ix,iy,:,:]),1,colors='red',linewidths=0.5)
         plt.savefig(f'plots_training_overlay/Training_Overlay_ix_{ix+1}_slice_{iy+1}.png')
         plt.close()
 
@@ -137,9 +127,8 @@ for ix in tqdm(range(len(preds_test))):
         ax3 = fig.add_subplot(122)
         plt.imshow(np.squeeze(preds_test_t[ix,iy,:,:]))
         ax1.title.set_text('Clinical Image')
-        ax2.title.set_text('Real Mask')
         ax3.title.set_text('Predicted Mask')
-        plt.savefig(f'testing_testing/Testing_Masks_ix_{ix+1}_slice_{iy+1}.png')
+        plt.savefig(f'plots_testing/Testing_Masks_ix_{ix+1}_slice_{iy+1}.png')
         plt.close()
 
 print('Finished Saving')

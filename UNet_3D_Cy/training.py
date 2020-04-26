@@ -63,21 +63,6 @@ print('Loaded Testing Data')
 print('','','')
 print('','','')
 
-# Randomly Show an Image
-
-# image_x = random.randint(0, N-1)
-# fig = plt.figure()
-# ax1 = fig.add_subplot(121)
-# x_index = X_train[image_x,idx_slice,:,:]
-# tf.print(x_index.shape)
-# plt.imshow(np.squeeze(x_index), cmap='gray')
-# ax2 = fig.add_subplot(122)
-# ax1.title.set_text('Clinical Image')
-# y_index = Y_train[image_x,idx_slice,:,:]
-# plt.imshow(np.squeeze(y_index), cmap='gray')
-# ax2.title.set_text('Real Mask')
-# plt.show()
-
 # UNet Model
 inputs = tf.keras.layers.Input((img_thickness, img_width, img_height, img_channels))
 
@@ -170,84 +155,11 @@ model.summary()
 # Checkpoints and Callbacks
 #checkpointer = tf.keras.callbacks.ModelCheckpoint('model_pros_segmentation.h5',
 #                                                  verbose=1, save_best_only=True)
-callbacks = [tf.keras.callbacks.ModelCheckpoint('model_pros_segmentation.h5',
+callbacks = [tf.keras.callbacks.ModelCheckpoint('saved_model/best_model.h5',
                                                  verbose=1, save_best_only=True),
             tf.keras.callbacks.EarlyStopping(patience=patience, monitor='loss'),
             tf.keras.callbacks.TensorBoard(log_dir='logs')]
 results = model.fit(X_train, Y_train, validation_split=val_size, batch_size=batch_size,
                     epochs=epochs, callbacks=callbacks) 
 
-model.save('my_model.h5') 
-
-# Save the output masks
-
-idx = random.randint(0, N)
-
-preds_train = model.predict(X_train[:int(X_train.shape[0]*(1-val_size))], verbose=1)
-preds_val = model.predict(X_train[int(X_train.shape[0]*(1-val_size)):], verbose=1)
-preds_test = model.predict(X_test, verbose=1)
-
-preds_train_t = (preds_train > 0.5).astype(np.uint8)
-preds_val_t = (preds_val > 0.5).astype(np.uint8)
-preds_test_t = (preds_test > 0.5).astype(np.uint8)
-
-print('','','')
-print('','','')
-print('Saving 3D Segmentation Training Masks')
-
-for ix in tqdm(range(len(preds_train))):
-    for iy in range(img_thickness):
-        fig = plt.figure()
-        fig.suptitle(f'3D Segmentation Training Masks (ix={ix+1}, slice={iy+1})', fontsize=12)
-        ax1 = fig.add_subplot(131)
-        plt.imshow(np.squeeze(X_train[ix,iy,:,:]))
-        ax2 = fig.add_subplot(132)
-        plt.imshow(np.squeeze(Y_train[ix,iy,:,:]))
-        ax3 = fig.add_subplot(133)
-        plt.imshow(np.squeeze(preds_train_t[ix,iy,:,:]))
-        ax1.title.set_text('Clinical Image')
-        ax2.title.set_text('Real Mask')
-        ax3.title.set_text('Predicted Mask')
-        plt.savefig(f'plots_training/Training_Masks_ix_{ix+1}_slice_{iy+1}.png')
-        plt.close()
-
-print('Finished Saving')
-print('','','')
-print('','','')
-print('Saving 2D Segmentation Training Mask Overlays')
-
-for ix in tqdm(range(len(preds_train))):
-    for iy in range(img_thickness):
-        fig = plt.figure()
-        fig.suptitle(f'2D Segmentation Training Mask Overlay (ix={ix+1}, slice={iy+1})', fontsize=12)
-        ax1 = fig.add_subplot()
-        plt.imshow(np.squeeze(X_train[ix]))
-        plt.contour(np.squeeze(Y_train[ix]),1,colors='yellow',linewidths=0.5)
-        plt.contour(np.squeeze(preds_train_t[ix]),1,colors='red',linewidths=0.5)
-        plt.savefig(f'plots_training_overlay/Training_Overlay_ix_{ix+1}_slice_{iy+1}.png')
-        plt.close()
-
-print('Finished Saving')
-print('','','')
-print('','','')
-print('Saving 3D Segmentation Testing Masks')
-
-for ix in tqdm(range(len(preds_test))):
-    for iy in range(img_thickness):
-        fig = plt.figure()
-        fig.suptitle(f'3D Segmentation Testing Masks (ix={ix+1}, slice={iy+1})', fontsize=12)
-        ax1 = fig.add_subplot(121)
-        plt.imshow(np.squeeze(X_test[ix,iy,:,:]))
-        ax3 = fig.add_subplot(122)
-        plt.imshow(np.squeeze(preds_test_t[ix,iy,:,:]))
-        ax1.title.set_text('Clinical Image')
-        ax2.title.set_text('Real Mask')
-        ax3.title.set_text('Predicted Mask')
-        plt.savefig(f'plots_testing/Testing_Masks_ix_{ix+1}_slice_{iy+1}.png')
-        plt.close()
-
-print('Finished Saving')
-print('','','')
-print('','','')
-
-print('Training Script has sucessfully completed')
+model.save('saved_model/final_model.h5') 

@@ -10,10 +10,10 @@ img_thickness: 32
 img_channels: 1
 
 learning_rate: 1e-4
-epochs: 10
+epochs: 1
 val_size: 0.1
 dropout: 0.5
 batch_size: 4
-patience: 1000
+patience: 1
 
-f: [0, 8, 16, 32, 65, 128, 64, 32, 16, 8]
+f: [0, 4, 8, 16, 32, 64, 32, 16, 8, 4]

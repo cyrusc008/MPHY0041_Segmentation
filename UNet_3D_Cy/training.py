@@ -148,6 +148,8 @@ c9 = tf.keras.layers.Conv3D(f[9], (3, 3, 3), activation='relu',
 
 outputs = tf.keras.layers.Conv3D(1, (1, 1, 1), activation='sigmoid')(c9)
 
+tf.is_tensor(inputs)
+
 model = tf.keras.Model(inputs=[inputs], outputs=[outputs])
 model.compile(optimizer=tf.optimizers.Adam(learning_rate), loss=dice_coef_loss, metrics=[dice_coef])
 model.summary()

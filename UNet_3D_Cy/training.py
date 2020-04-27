@@ -171,8 +171,6 @@ model.compile(optimizer=tf.optimizers.Adam(learning_rate), loss=dice_coef_loss, 
 model.summary()
 
 # Checkpoints and Callbacks
-#checkpointer = tf.keras.callbacks.ModelCheckpoint('model_pros_segmentation.h5',
-#                                                  verbose=1, save_best_only=True)
 callbacks = [tf.keras.callbacks.ModelCheckpoint('saved_model/best_model.h5',
                                                  verbose=1, save_best_only=True),
             tf.keras.callbacks.EarlyStopping(patience=patience, monitor='loss'),

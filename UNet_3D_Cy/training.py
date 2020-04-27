@@ -72,6 +72,8 @@ s = tf.keras.layers.Lambda(lambda x: x / 255)(inputs)
 # Encoding
 c1 = tf.keras.layers.Conv3D(f[1], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(s)
+c1 = tf.keras.layers.BatchNormalization(
+     axis=-1, momentum=0.99, epsilon=0.001, center=True, scale=True)(c1)
 c1 = tf.keras.layers.Dropout(dropout)(c1)
 c2 = tf.keras.layers.Conv3D(f[1], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(c1)
@@ -80,6 +82,8 @@ p1 = tf.keras.layers.MaxPooling3D((2,2,2))(c1)
 
 c2 = tf.keras.layers.Conv3D(f[2], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(p1)
+c2 = tf.keras.layers.BatchNormalization(
+     axis=-1, momentum=0.99, epsilon=0.001, center=True, scale=True)(c2)
 c2 = tf.keras.layers.Dropout(dropout)(c2)
 c2 = tf.keras.layers.Conv3D(f[2], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(c2)
@@ -88,6 +92,8 @@ p2 = tf.keras.layers.MaxPooling3D((2,2,2))(c2)
 
 c3 = tf.keras.layers.Conv3D(f[3], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(p2)
+c3 = tf.keras.layers.BatchNormalization(
+     axis=-1, momentum=0.99, epsilon=0.001, center=True, scale=True)(c3)
 c3 = tf.keras.layers.Dropout(dropout)(c3)
 c3 = tf.keras.layers.Conv3D(f[3], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(c3)
@@ -96,6 +102,8 @@ p3 = tf.keras.layers.MaxPooling3D((2,2,2))(c3)
 
 c4 = tf.keras.layers.Conv3D(f[4], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(p3)
+c4 = tf.keras.layers.BatchNormalization(
+     axis=-1, momentum=0.99, epsilon=0.001, center=True, scale=True)(c4)
 c4 = tf.keras.layers.Dropout(dropout)(c4)
 c4 = tf.keras.layers.Conv3D(f[4], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(c4)
@@ -104,6 +112,8 @@ p4 = tf.keras.layers.MaxPooling3D((2,2,2))(c4)
 
 c5 = tf.keras.layers.Conv3D(f[5], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(p4)
+c5 = tf.keras.layers.BatchNormalization(
+     axis=-1, momentum=0.99, epsilon=0.001, center=True, scale=True)(c5)
 c5 = tf.keras.layers.Dropout(dropout)(c5)
 c5 = tf.keras.layers.Conv3D(f[5], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(c5)
@@ -114,6 +124,8 @@ u6 = tf.keras.layers.Conv3DTranspose(f[6], (2, 2, 2), strides=(2, 2, 2), padding
 u6 = tf.keras.layers.concatenate([u6, c4])
 c6 = tf.keras.layers.Conv3D(f[6], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(u6)
+c6 = tf.keras.layers.BatchNormalization(
+     axis=-1, momentum=0.99, epsilon=0.001, center=True, scale=True)(c6)
 c6 = tf.keras.layers.Dropout(dropout)(c6)
 c6 = tf.keras.layers.Conv3D(f[6], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(c6)
@@ -123,6 +135,8 @@ u7 = tf.keras.layers.Conv3DTranspose(f[7], (2, 2, 2), strides=(2, 2, 2), padding
 u7 = tf.keras.layers.concatenate([u7, c3])
 c7 = tf.keras.layers.Conv3D(f[7], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(u7)
+c7 = tf.keras.layers.BatchNormalization(
+     axis=-1, momentum=0.99, epsilon=0.001, center=True, scale=True)(c7)
 c7 = tf.keras.layers.Dropout(dropout)(c7)
 c7 = tf.keras.layers.Conv3D(f[7], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(c7)
@@ -132,6 +146,8 @@ u8 = tf.keras.layers.Conv3DTranspose(f[8], (2, 2, 2), strides=(2, 2, 2), padding
 u8 = tf.keras.layers.concatenate([u8, c2])
 c8 = tf.keras.layers.Conv3D(f[8], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(u8)
+c8 = tf.keras.layers.BatchNormalization(
+     axis=-1, momentum=0.99, epsilon=0.001, center=True, scale=True)(c8)
 c8 = tf.keras.layers.Dropout(dropout)(c8)
 c8 = tf.keras.layers.Conv3D(f[8], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(c8)
@@ -141,14 +157,14 @@ u9 = tf.keras.layers.Conv3DTranspose(f[9], (2, 2, 2), strides=(2, 2, 2), padding
 u9 = tf.keras.layers.concatenate([u9, c1])
 c9 = tf.keras.layers.Conv3D(f[9], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(u9)
+c9 = tf.keras.layers.BatchNormalization(
+     axis=-1, momentum=0.99, epsilon=0.001, center=True, scale=True)(c9)
 c9 = tf.keras.layers.Dropout(dropout)(c9)
 c9 = tf.keras.layers.Conv3D(f[9], (3, 3, 3), activation='relu',
                             kernel_initializer='he_normal', padding='same')(c9)
 
 
 outputs = tf.keras.layers.Conv3D(1, (1, 1, 1), activation='sigmoid')(c9)
-
-tf.is_tensor(inputs)
 
 model = tf.keras.Model(inputs=[inputs], outputs=[outputs])
 model.compile(optimizer=tf.optimizers.Adam(learning_rate), loss=dice_coef_loss, metrics=[dice_coef])

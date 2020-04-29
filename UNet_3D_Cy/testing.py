@@ -62,7 +62,7 @@ model = tf.keras.models.load_model('saved_model/best_model.h5',
                                                     'dice_coef': dice_coef})
 tf.print(model.summary())
 
-loss, dice = model.evaluate(X_train,  Y_train, verbose=1)
+loss, dice = model.evaluate(X_train[:-10],  Y_train[:-10], verbose=1)
 print('Restored model, average dice coefficient: {:5.2f}'.format(dice))
 
 # Save the masks

@@ -9,11 +9,11 @@ img_height: 128
 img_thickness: 32
 img_channels: 1
 
-learning_rate: 1e-4
+learning_rate: 5e-4
 epochs: 500
-val_size: 0.1
+val_size: 0.20
 dropout: 0.5
-batch_size: 16
+batch_size: 4
 patience: 500
 
-f: [0, 4, 8, 16, 32, 64, 32, 16, 8, 4]
+f: [0, 16, 32, 64, 128, 256, 128, 64, 32, 16]

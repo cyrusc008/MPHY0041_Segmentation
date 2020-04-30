@@ -46,8 +46,6 @@ for n in tqdm(range(N)):
 
 print('Loaded Training Data')
 
-print(X_train.shape)
-
 # Load Testing Data
 X_test = np.zeros((N_test, img_thickness, img_height, img_width, img_channels), dtype=np.float32)
 

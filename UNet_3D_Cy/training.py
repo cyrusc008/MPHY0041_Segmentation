@@ -169,11 +169,11 @@ model.compile(optimizer=tf.optimizers.Adam(learning_rate), loss=dice_coef_loss, 
 model.summary()
 
 # Checkpoints and Callbacks
-callbacks = [tf.keras.callbacks.ModelCheckpoint('saved_model/best_model.h5',
+callbacks = [tf.keras.callbacks.ModelCheckpoint('saved_model/3D_best_model.h5',
                                                  verbose=1, save_best_only=True),
             tf.keras.callbacks.EarlyStopping(patience=patience, monitor='loss'),
             tf.keras.callbacks.TensorBoard(log_dir='logs')]
 results = model.fit(X_train, Y_train, validation_split=val_size, batch_size=batch_size,
                     epochs=epochs, callbacks=callbacks) 
 
-model.save('saved_model/final_model.h5') 
+model.save('saved_model/3D_final_model.h5') 

@@ -57,7 +57,7 @@ print('','','')
 
 # Load the trained model
 
-model = tf.keras.models.load_model('saved_model/best_model.h5',
+model = tf.keras.models.load_model('saved_model/3D_best_model.h5',
                                     custom_objects={'dice_coef_loss': dice_coef_loss,
                                                     'dice_coef': dice_coef})
 tf.print(model.summary())
